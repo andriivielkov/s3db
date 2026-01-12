@@ -1,0 +1,134 @@
+@use './mixins/breakpoints' as *;
+
+.listGroup {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
+  width: 100%;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex: 1 1 20rem;
+    padding: 1.2rem;
+    min-height: 4.4rem;
+    background-color: #F6F8FA;
+    border-radius: 0.6rem;
+    border: 0.1rem solid transparent;
+    cursor: pointer;
+    transition: all 0.22s ease-in-out;
+
+    &_selected {
+      border-color: var(--color-primary-dark);
+      background-color: var(--color-primary-light);
+    }
+
+    &:hover {
+      background-color: #ebedf0;
+    }
+
+    @include respond-to('mobile-sm') {
+      flex-basis: 100%;
+    }
+  }
+}
+
+.formGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+
+  &__item {
+    flex-grow: 1;
+    flex-shrink: 0;
+    padding-bottom: 1rem;
+    &_w50 {
+      flex-basis: calc(50% - 0.5rem);
+    }
+
+    &_w100 {
+      flex-basis: 100%;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    @include respond-to('mobile-sm') {
+      flex-basis: 100% !important;
+    }
+  }
+}
+
+.buttonGroup {
+  margin-top: auto;
+  padding-top: 4rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem; 
+
+  @include respond-to('mobile-sm') {
+    flex-direction: column-reverse;
+    gap: 0.8rem;
+    .ant-btn {
+      width: 100%;
+    }
+  }
+}
+
+.cardGroup {
+  display: flex;
+  flex-direction: column;
+  border: 0.12rem solid #D3D8DC;
+  border-radius: 0.8rem;
+  min-height: 32.3rem;
+  padding: 2rem;
+  max-width: 55rem;
+  width: 100%;
+
+  @include respond-to('mobile-sm') {
+    padding: 1.5rem;
+  }
+  // test
+  // @include respond-to('tablet-md') {
+  //   max-width: 100%;
+  // }
+}
+
+.labelGroup {
+  display: flex;
+  align-items: center;
+  & span {
+    padding-left: 0.8rem;
+  }
+}
+
+.preContainer {
+  position: relative;
+  background-color: #F6F8FA;
+  border-radius: 0.8rem;
+  padding: 1.6rem;
+  margin: 5rem 0;
+  overflow: auto;
+
+  pre {
+    margin: 0;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: #24292E;
+    tab-size: 2;
+  }
+
+  &::before {
+    content: 'JSON';
+    display: block;
+    font-size: 1.1rem;
+    color: #6A737D;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+  }
+}

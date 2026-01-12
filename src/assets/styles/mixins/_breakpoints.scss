@@ -1,0 +1,17 @@
+@use 'sass:map';
+
+$breakpoints: (
+  'mobile-sm': 31.25rem,
+  'mobile-md': 42.5rem,
+  'tablet-sm': 48rem,
+  'tablet-md': 48rem
+);
+
+@mixin respond-to($breakpoint) {
+  $value: map.get($breakpoints, $breakpoint);
+  @if $breakpoint == 'tablet-md' {
+    @media (min-width: $value) { @content; }
+  } @else {
+    @media (max-width: $value) { @content; }
+  }
+}
