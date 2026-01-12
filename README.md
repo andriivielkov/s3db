@@ -18,8 +18,6 @@ cd s3db && npm install && npm run dev
 
 `npm run build` or `npm run preview`
 
-[Link Preview: https://todo-list.ho.ua](https://todo-list.ho.ua/)
-
 ---
 
 ## 🏗 Architecture (DRY)
