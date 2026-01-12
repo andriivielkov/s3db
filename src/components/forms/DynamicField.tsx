@@ -16,19 +16,17 @@ const COMPONENT_MAP: Record<string, unknown> = {
 };
 
 const DynamicField: FC<DynamicFieldProps> = ({ fieldItem, formik }) => {
-  // Используем fallback 'text', если type не определен, чтобы избежать ошибки TS
   const fieldType = fieldItem.type || 'text';
   const Component = (COMPONENT_MAP[fieldType] || Input) as any;
 
   const hasError = formik.touched[fieldItem.key] && formik.errors[fieldItem.key];
 
   return (
-    <div style={{ marginBottom: '16px' }}>
-      {fieldItem.label && (
-        <label style={{ display: 'block', marginBottom: '8px' }}>
-          {fieldItem.label}
-        </label>
-      )}
+    <div>
+      <label>
+        {fieldItem?.label}
+      </label>
+
       <Component
         style={{ width: '100%' }}
         name={fieldItem.key}
@@ -43,6 +41,7 @@ const DynamicField: FC<DynamicFieldProps> = ({ fieldItem, formik }) => {
           formik.setFieldValue(fieldItem.key, value);
         }}
       />
+
       {hasError && (
         <div style={{ color: '#ff4d4f', fontSize: '12px', marginTop: '4px' }}>
           {String(formik.errors[fieldItem.key])}
