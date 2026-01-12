@@ -18,6 +18,8 @@ cd s3db && npm install && npm run dev
 
 `npm run build` or `npm run preview`
 
+[Link Preview: https://s3db.vercel.app](https://s3db.vercel.app)
+
 ---
 
 ## 🏗 Architecture (DRY)
