@@ -12,4 +12,16 @@ export default defineConfig({
       '@images': path.resolve(__dirname, './src/assets/images'),
     },
   },
+  build: {
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom'],
+          'vendor-antd': ['antd', '@ant-design/icons'],
+          'vendor-formik': ['formik', 'yup'],
+        },
+      },
+    },
+  },
 })
