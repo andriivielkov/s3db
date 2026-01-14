@@ -1,35 +1,14 @@
 import { useMemo } from 'react';
-import type { FC } from 'react';
 import { PROVIDERS, REGIONS } from '@/configs/backend.data';
 import { FIELD_CONFIGS, PROVIDER_UI } from '@/configs/ui.config';
 import { LOCALES } from '@/locales';
+import type { Provider, Field, FieldOption } from '@/types/config';
 
-interface FieldOption {
-  value: string | number;
-  label: string;
-}
-
-interface UIField {
-  type?: string;
-  label?: string;
-  placeholder?: string;
-  group?: string;
-  asyncOptions?: boolean;
-  options?: FieldOption[];
-  key: string;
-}
-
-interface Provider {
-  key: string;
-  label: string;
-  IconComponent: FC<{ fill?: string }>;
-  fields: Array<Record<string, unknown> & UIField>;
-  urlTemplate: string;
-  [key: string]: unknown;
-}
+type LocaleType = typeof LOCALES;
+type LangCode = keyof LocaleType;
 
 export const useProviderConfig = (selectedProviderKey: string) => {
-  const selectedLocales = 'en';
+  const selectedLocales: LangCode = 'en';
 
   const dynamicConfig = useMemo<Provider[]>(() => {
     return PROVIDERS.map(providerItem => {
@@ -46,18 +25,21 @@ export const useProviderConfig = (selectedProviderKey: string) => {
           const customField = customConfigs[providerItem.key]?.[field.key];
           const defaultField = defaultConfigs[field.key];
 
-          const uiField = {
+          const uiField: Field = {
             key: field.key,
-            ...(customField || defaultField || {})
-          } as UIField;
+            ...((customField || defaultField || {}) as Record<string, unknown>)
+          };
 
-          let options: FieldOption[] = uiField.options || [];
+          let options: FieldOption[] = (uiField.options as FieldOption[]) || [];
 
           if (uiField.asyncOptions) {
             const providerRegions = (REGIONS as Record<string, { regions: string[] }>)[providerItem.key]?.regions || [];
+
+            const regionsList = LOCALES[selectedLocales].regions;
+            
             options = providerRegions.map(code => ({
               value: code,
-              label: (LOCALES[selectedLocales as keyof typeof LOCALES] as Record<string, any>).regions?.[code] || code
+              label: regionsList[code as keyof typeof regionsList] || code
             }));
           }
 
@@ -65,7 +47,7 @@ export const useProviderConfig = (selectedProviderKey: string) => {
         }),
       } as Provider;
     });
-  }, []);
+  }, [selectedLocales]);
 
   const currentProvider = useMemo(() =>
     dynamicConfig.find(p => p.key === selectedProviderKey),

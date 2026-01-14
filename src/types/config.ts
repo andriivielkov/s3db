@@ -9,16 +9,20 @@ export interface Field {
   key: string;
   type?: string;
   label?: string;
-  options?: Array<{ label: string; value: string | number }>;
+  placeholder?: string;
+  group?: string;
+  asyncOptions?: boolean;
+  options?: FieldOption[];
   [key: string]: unknown;
 }
 
 export interface Provider {
   key: string;
   label: string;
-  IconComponent: FC<{fill?: string}>
+  IconComponent: FC<{ fill?: string }>;
   fields: Field[];
   urlTemplate: string;
+  [key: string]: unknown;
 }
 
 export interface UIFieldConfig {
